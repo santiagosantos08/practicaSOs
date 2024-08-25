@@ -1,0 +1,4 @@
+/home/santiago/Documents/practicaSOs/tp1/ejemplo.bz2
+/home/santiago/Documents/practicaSOs/tp1/ejemplo.gz
+/home/santiago/Documents/practicaSOs/tp1/ejemplo.zip
+/home/santiago/Documents/practicaSOs/tp1/ejemplo.tar
