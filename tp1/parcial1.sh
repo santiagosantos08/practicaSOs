@@ -2,17 +2,16 @@
 
 declare -A termCount #declara -A : array asociativo (mapa)
 
-while read -r line; do
-    for term in $line; do
-        if [[ ${termCount[$term]+x} ]]; then #chequea si existe la key
-            ((termCount[$term]++)) #doble parentesis : expresion aritmetica
-        else
-            termCount[$term]=1
-        fi
-        echo "$term"
-    done
-done < "$1"
-echo "aa"
+
+for f in $(cat "$1" | tr -d . | tr -d ,); do
+    if [[ -n "${termCount["$f"]}" ]]; then #chequea si existe la key
+        ((termCount[$f]++)) #doble parentesis : expresion aritmetica
+    else
+        termCount[$f]=1
+    fi
+    #echo "$f ${termCount[$f]}"
+done
+
 max=0
 
 for term in "${!termCount[@]}"; do
@@ -20,10 +19,9 @@ for term in "${!termCount[@]}"; do
         max=${termCount[$term]}
     fi
 done
-#
-#for term in "${!termCount[@]}"; do
-#    count=${termCount[$term]}
-#    tf=(($count/$max))
-#    #echo -e "$term \n"
-#    #echo "TF("$term") = "$count" / "$max" = "$tf" \n"
-#done
+#echo "scale=2 ; $var1 / $var2" | bc
+for term in "${!termCount[@]}"; do # el '!' imprime solo la key y no el valor
+    count=${termCount[$term]}
+    tf=$(bc <<<"scale=2; $count / $max")
+    echo "TF("$term") = "$count" / "$max" = "$tf""
+done
